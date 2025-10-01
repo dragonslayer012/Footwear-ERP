@@ -405,10 +405,15 @@ export function ProjectDevelopment() {
       />
 
       <ProjectDetailsDialog
-        open={projectDetailsOpen}
-        onClose={() => setProjectDetailsOpen(false)}
-        project={selectedProject}
-      />
+  open={projectDetailsOpen}
+  onOpenChange={setProjectDetailsOpen}
+  project={selectedProject}
+  brands={brands}
+  categories={categories}
+  types={types}
+  colors={colors}
+  countries={countries}
+/>
     </div>
   );
 }

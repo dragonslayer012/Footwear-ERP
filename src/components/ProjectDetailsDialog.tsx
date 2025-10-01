@@ -39,6 +39,19 @@ const workflowStages = [
 export function ProjectDetailsDialog({ open, onOpenChange, project, brands, categories, types, colors, countries }: ProjectDetailsDialogProps) {
   const { updateRDProject } = useERPStore();
 
+  // Add safe defaults at the top
+  const safeBrands = brands || [];
+  const safeCategories = categories || [];
+  const safeTypes = types || [];
+  const safeColors = colors || [];
+  const safeCountries = countries || [];
+
+  const handleCloseDialog = () => {
+    if (onOpenChange) {
+      onOpenChange(false);
+    }
+  };
+
   // Red Seal Development table data - matching exact table content
   const redSealDevelopmentData = [
     { 
@@ -213,7 +226,7 @@ export function ProjectDetailsDialog({ open, onOpenChange, project, brands, cate
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="!max-w-[85vw] !w-[85vw] max-h-[90vh] overflow-hidden p-0 m-0 top-[5vh] translate-y-0 flex flex-col">
+        <DialogContent className="!max-w-[85vw] !w-[85vw] max-h-[90vh] overflow-hidden p-0 m-0 flex flex-col">
           {/* Sticky Header Section */}
           <div className="sticky top-0 z-50 px-8 py-6 bg-gradient-to-r from-gray-50 via-white to-gray-50 border-b border-gray-200 shadow-sm">
             <div className="flex items-center justify-between">
@@ -287,13 +300,18 @@ export function ProjectDetailsDialog({ open, onOpenChange, project, brands, cate
                   </>
                 )}
                 <Button 
-                  onClick={() => onOpenChange(false)}
-                  variant="ghost"
-                  size="sm"
-                  className="h-10 w-10 p-0 hover:bg-gray-100 rounded-full cursor-pointer flex items-center justify-center"
-                >
-                  <X className="w-5 h-5 text-gray-500 hover:text-gray-700" />
-                </Button>
+  onClick={(e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onOpenChange(false);
+  }}
+  variant="ghost"
+  size="sm"
+  className="h-10 w-10 p-0 hover:bg-gray-100 rounded-full cursor-pointer flex items-center justify-center"
+  type="button"
+>
+  <X className="w-5 h-5 text-gray-500 hover:text-gray-700" />
+</Button>
               </div>
             </div>
           </div>
